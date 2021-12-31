@@ -7,7 +7,7 @@ class Trail
 	vector <glm::vec3> positions; //ffs 
 	vector <ofPoint> points;
 	ofColor tran_white;
-	int max_pos = 0;
+	int max_pos = 5;
 	ofPolyline trail_line;
 
 

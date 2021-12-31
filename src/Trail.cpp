@@ -12,7 +12,7 @@ void Trail::update(ofVec3f pos) {
 
 	if (positions.size() > max_pos) {
 
-		positions.erase(positions.begin());
+		//positions.erase(positions.begin());
 	}
 	positions.push_back(pos);
 	
