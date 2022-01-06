@@ -16,7 +16,7 @@ int num_t_grp;
 int frame;
 void p2p_collision(vector <Particle> particlegroup) {
 
-	int particle_group_size = particlegroup1.size();
+	int particle_group_size = particlegroup.size();
 
 	for (int i = 0; i < particle_group_size; i++) { //for every particle
 		for (int j = 0; j < particle_group_size; j++) {  //and for every other
@@ -53,7 +53,7 @@ void p2p_collision(vector <Particle> particlegroup) {
 			}
 			
 		}
-		particlegroup[i].update();
+		//particlegroup[i].update();
 		
 	}
 }
@@ -88,14 +88,14 @@ void ofApp::update() {
 	
 	
 
-	for (int i = 0; i < quantity; i++) {  //for the number of particles
+	for (int i = 0; i < particlegroup1.size(); i++) {  //for the number of particles
 
 		ofVec2f parti_pos = particlegroup1[i].get_pos(); // getting particle information
 		int parti_rad = particlegroup1[i].get_p_rad();
 
 
 		trails[i].update(parti_pos);
-		
+		particlegroup1[i].update();
 
 	}
 
