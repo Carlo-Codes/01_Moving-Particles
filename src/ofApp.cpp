@@ -4,9 +4,9 @@
 		
 
 int p_rad_min = 2;
-int p_rad_max = 5;
+int p_rad_max = 10;
 
-Particle particlegroup1[quantity];
+vector <Particle> particlegroup1;
 
 vector <Trail> trails;
 
@@ -14,14 +14,14 @@ vector <Trail> trails;
 /// My Functions////
 int num_t_grp;
 int frame;
-void p2p_collision(Particle particlegroup[quantity]) {
+void p2p_collision(vector <Particle> particlegroup) {
 
-	int particle_group_size = quantity;
+	int particle_group_size = particlegroup1.size();
 
-	for (int i = 0; i < particle_group_size; i++) {
-		for (int j = 0; j < particle_group_size; j++) {
+	for (int i = 0; i < particle_group_size; i++) { //for every particle
+		for (int j = 0; j < particle_group_size; j++) {  //and for every other
 			
-			// Ball 2 ball collision 
+			
 			ofVec2f i_pos(particlegroup[i].get_pos()); //get pos of first particle
 			ofVec2f j_pos(particlegroup[j].get_pos()); // get pois of second particle
 			int i_rad = particlegroup[i].get_p_rad(); // get rads
@@ -32,7 +32,7 @@ void p2p_collision(Particle particlegroup[quantity]) {
 			float distance_between = i_pos.distance(j_pos); //using ofvec.distance (slow) to get the distance between balls
 			float touching_distance = i_rad + j_rad; // setting which distance is touching
 
-			if (distance_between <= touching_distance) { // if particles touch
+			if (distance_between <= touching_distance) {		// if particles touch
 
 				int particle_i2j_dx = particlegroup[i].get_pos().x - particlegroup[j].get_pos().x; //difference in x between particles
 				int particle_i2j_dy = particlegroup[i].get_pos().y - particlegroup[j].get_pos().y; //difference in y
@@ -72,7 +72,8 @@ void ofApp::setup(){
 		int rand_y = ofRandom(50, 500);
 		int particle_size = ofRandom(p_rad_min, p_rad_max);
 		ofVec2f pos(rand_x, rand_y);
-		particlegroup1[i].setup(rand_x,rand_y,particle_size);
+		Particle particle (rand_x,rand_y,particle_size);
+		particlegroup1.push_back(particle);
 		Trail trail(pos, particle_size);
 		trails.push_back(trail);
 	}

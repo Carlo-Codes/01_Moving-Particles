@@ -1,5 +1,12 @@
 #include "Particle.h"
 
+Particle::Particle(int pos_x, int pos_y, int p_rad) {
+
+	position.set(pos_x, pos_y);
+	p_radius = p_rad;
+	null_vector.set(0, 0);
+}
+
 void Particle::setup(int pos_x, int pos_y, int p_rad) {
 
 	position.set(pos_x, pos_y);
