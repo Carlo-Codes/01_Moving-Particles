@@ -1,14 +1,16 @@
 #include "ofApp.h"
 
-#define quantity 50
+#define quantity 1000
 		
 
-int p_rad_min = 20;
+int p_rad_min = 2;
 int p_rad_max = 5;
 
 Particle particlegroup1[quantity];
 
 vector <Trail> trails;
+
+
 /// My Functions////
 int num_t_grp;
 int frame;
@@ -66,8 +68,8 @@ void ofApp::setup(){
 
 	for (int i = 0; i < quantity; i++) {
 
-		int rand_x = ofRandom(50, 200);
-		int rand_y = ofRandom(50, 200);
+		int rand_x = ofRandom(50, 500);
+		int rand_y = ofRandom(50, 500);
 		int particle_size = ofRandom(p_rad_min, p_rad_max);
 		ofVec2f pos(rand_x, rand_y);
 		particlegroup1[i].setup(rand_x,rand_y,particle_size);
@@ -85,17 +87,15 @@ void ofApp::update() {
 	
 	
 
-	for (int i = 0; i < quantity; i++) { 
+	for (int i = 0; i < quantity; i++) {  //for the number of particles
 
 		ofVec2f parti_pos = particlegroup1[i].get_pos(); // getting particle information
 		int parti_rad = particlegroup1[i].get_p_rad();
 
-		for (int j = 0; j < trails.size(); j++) {
 
-			trails[j].update(parti_pos);
+		trails[i].update(parti_pos);
+		
 
-		}
-	
 	}
 
 }
@@ -116,12 +116,12 @@ void ofApp::draw(){
 	for (int i = 0; i < trails.size(); i++) {
 
 		trails[i].draw();
-
+		
 		}
 
-
+	
 	//debug
-	int num_trail_pt = trails[1].get_positions().size();
+	int num_trail_pt = trails.size();
 	ofDrawBitmapString(num_trail_pt, 5, 15);
 
 }

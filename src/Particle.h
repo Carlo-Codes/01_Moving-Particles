@@ -8,9 +8,9 @@ class Particle
 	ofVec2f position;
 	ofVec2f velocity;
 	ofVec2f acceleration;
-	ofVec2f gravity = ofVec2f(0,0.9);
+	ofVec2f gravity = ofVec2f(0.3,0.9);
 	int p_radius = 10;
-	float fluid_density = 0.1;
+	float fluid_density = 0.8;
 	float p_bounciness = 0.5;
 	int bounces_y;
 	int bounces_x;

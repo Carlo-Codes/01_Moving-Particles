@@ -12,9 +12,11 @@ void Trail::update(ofVec3f pos) {
 
 	if (positions.size() > max_pos) {
 
-		//positions.erase(positions.begin());
+		positions.erase(positions.begin());
+		trail_line.removeVertex(0);
 	}
 	positions.push_back(pos);
+	trail_line.addVertex(pos);
 	
 }
 
@@ -22,14 +24,15 @@ void Trail::draw() {
 	ofEnableAlphaBlending();
 	int offsets = 5;
 	float scaling = 0.8;
+	
 
 	for (int i = 0; i < positions.size(); i++) {
 		ofSetColor(tran_white);
-		ofDrawCircle(positions[i], radius * scaling);
-		//trail_line.addVertex(positions[i]);
+		//ofDrawCircle(positions[i], radius * scaling);
+		
 	}
 	
-	//trail_line.draw();
+	trail_line.draw();
 }
 
 
