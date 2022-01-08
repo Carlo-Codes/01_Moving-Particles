@@ -6,7 +6,8 @@
 int p_rad_min = 2;
 int p_rad_max = 5;
 
-Particle particlegroup1[quantity];
+
+vector <Particle> particlegroup1;
 
 vector <Trail> trails;
 
@@ -14,9 +15,9 @@ vector <Trail> trails;
 /// My Functions////
 int num_t_grp;
 int frame;
-void p2p_collision(Particle particlegroup[quantity]) {
+void p2p_collision(vector <Particle> &particlegroup) {
 
-	int particle_group_size = quantity;
+	int particle_group_size = particlegroup.size();
 
 	for (int i = 0; i < particle_group_size; i++) {
 		for (int j = 0; j < particle_group_size; j++) {
@@ -71,8 +72,11 @@ void ofApp::setup(){
 		int rand_x = ofRandom(50, 500);
 		int rand_y = ofRandom(50, 500);
 		int particle_size = ofRandom(p_rad_min, p_rad_max);
+		
+		Particle temp_particle(rand_x, rand_y, particle_size);
+		particlegroup1.push_back(temp_particle);
+
 		ofVec2f pos(rand_x, rand_y);
-		particlegroup1[i].setup(rand_x,rand_y,particle_size);
 		Trail trail(pos, particle_size);
 		trails.push_back(trail);
 	}

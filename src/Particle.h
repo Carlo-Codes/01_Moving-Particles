@@ -20,6 +20,8 @@ class Particle
 	void sum_vectors(ofVec2f ex_force, bool collision = false);
 
 public:
+	Particle();
+	Particle(int pos_x, int pos_y, int p_rad);
 	void setup(int pos_x, int pos_y, int p_rad);
 	void update();
 	void draw();
