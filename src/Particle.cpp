@@ -47,10 +47,10 @@ void Particle::sum_vectors(ofVec2f force, bool collision) {
 
 	ofVec2f drag_n = (drag(velocity));
 	ofVec2f	acc_n = acceleration + gravity - drag_n + force;
-	ofVec2f vel_n = (velocity + acc_n);
+	ofVec2f vel_n = velocity + acc_n;
 	ofVec2f pos_n = position + vel_n;
 	
-	acceleration.set(acc_n);
+	acceleration = acc_n;
 	velocity.set(vel_n);
 	position.set(pos_n);
 
@@ -64,11 +64,11 @@ void Particle::next_frame() {
 		position.set(position.x, ofGetHeight() - p_radius);
 		
 		int react_vy = velocity.y * -1 * p_bounciness / bounces_y;
-		ofVec2f react_force(0, react_vy * 5);
+		ofVec2f react_force(0, react_vy * 10);
 
 		velocity.set(velocity.x, 0);
 		sum_vectors(react_force, true);
-		acceleration.set(null_vector);
+		
 
 
 	}
@@ -82,7 +82,7 @@ void Particle::next_frame() {
 		velocity.set(0, velocity.y);
 		sum_vectors(react_force, true);
 
-		acceleration.set(null_vector);
+		
 
 	}	
 	else if (position.x <= 0 + p_radius) { // x left screen collision
@@ -95,15 +95,15 @@ void Particle::next_frame() {
 
 		velocity.set(0, velocity.y);
 		sum_vectors(react_force, true);
-		acceleration.set(null_vector);
+		
 
 	}
 	else {
 		sum_vectors(null_vector);
-		acceleration.set(null_vector);
+		
 	}
 		
-	
+	//acceleration.set(null_vector);
 }
 
 void Particle::debug() {
@@ -153,5 +153,17 @@ int Particle::get_p_rad() {
 
 void Particle::add_force(ofVec2f force) {
 
-	acceleration.set(acceleration + force);
+	acceleration = acceleration + force;
+}
+
+ofVec2f Particle::get_acceleration() {
+
+	return acceleration;
+
+}
+
+void Particle::set_acceleration(ofVec2f force) {
+
+	acceleration = force;
+
 }

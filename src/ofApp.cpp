@@ -1,6 +1,6 @@
 #include "ofApp.h"
 
-#define quantity 1000
+#define quantity 1
 		
 
 int p_rad_min = 2;
@@ -8,6 +8,8 @@ int p_rad_max = 10;
 
 vector <Particle> particlegroup1;
 
+
+int debug_value;
 vector <Trail> trails;
 
 
@@ -18,22 +20,22 @@ void p2p_collision(vector <Particle> particlegroup) {
 
 	int particle_group_size = particlegroup.size();
 
-	for (int i = 0; i < particle_group_size; i++) { //for every particle
-		for (int j = 0; j < particle_group_size; j++) {  //and for every other
-			
+	for (int i = 0; i < particle_group_size - 1; i++) { //for every particle
+		//cout << "i" << i << "\n";
+		for (int j = 1; j < particle_group_size; j++) {  //and for every other
+			//cout << "j" << j << " ";
 			
 			ofVec2f i_pos(particlegroup[i].get_pos()); //get pos of first particle
 			ofVec2f j_pos(particlegroup[j].get_pos()); // get pois of second particle
 			int i_rad = particlegroup[i].get_p_rad(); // get rads
 			int j_rad = particlegroup[j].get_p_rad();
-
 			float force_modifier = 0.25;
 
 			float distance_between = i_pos.distance(j_pos); //using ofvec.distance (slow) to get the distance between balls
 			float touching_distance = i_rad + j_rad; // setting which distance is touching
-
+			debug_value = j;
 			if (distance_between <= touching_distance) {		// if particles touch
-
+				//cout << "if" << " ";
 				int particle_i2j_dx = particlegroup[i].get_pos().x - particlegroup[j].get_pos().x; //difference in x between particles
 				int particle_i2j_dy = particlegroup[i].get_pos().y - particlegroup[j].get_pos().y; //difference in y
 
@@ -46,14 +48,20 @@ void p2p_collision(vector <Particle> particlegroup) {
 				ofVec2f react_vector_j(particle_j2i_dx, particle_j2i_dy);
 				ofVec2f react_force_j = react_vector_j * force_modifier * 1 / j_rad;//add size adjusted force
 
+				//ofVec2f debug_original = particlegroup[j].get_acceleration();
+				//ofVec2f debug_change = debug_original + react_force_j;
+
 				particlegroup[i].add_force(react_force_i);
 				particlegroup[j].add_force(react_force_j);
 
+				//ofVec2f debug_new = particlegroup[j].get_acceleration();
+
+				//cout << debug_original << " || " << debug_change <<  " || " << debug_new << "\n";
 				
 			}
 			
 		}
-		//particlegroup[i].update();
+		
 		
 	}
 }
@@ -72,8 +80,11 @@ void ofApp::setup(){
 		int rand_y = ofRandom(50, 500);
 		int particle_size = ofRandom(p_rad_min, p_rad_max);
 		ofVec2f pos(rand_x, rand_y);
+
 		Particle particle (rand_x,rand_y,particle_size);
 		particlegroup1.push_back(particle);
+
+
 		Trail trail(pos, particle_size);
 		trails.push_back(trail);
 	}
@@ -84,8 +95,8 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update() {
 
-	p2p_collision(particlegroup1);
 	
+	p2p_collision(particlegroup1);
 	
 
 	for (int i = 0; i < particlegroup1.size(); i++) {  //for the number of particles
@@ -96,9 +107,10 @@ void ofApp::update() {
 
 		trails[i].update(parti_pos);
 		particlegroup1[i].update();
-
+		cout << particlegroup1[i].get_acceleration() << "||";
+		particlegroup1[i].set_acceleration(ofVec2f (0,0));
 	}
-
+	
 }
 
 
@@ -107,8 +119,9 @@ void ofApp::draw(){
 	
 	
 	//particle.debug();
+	ofDrawBitmapString(debug_value, 10, 10);
 	
-	for (int i = 0; i < quantity; i++) {
+	for (int i = 0; i < particlegroup1.size(); i++) {
 
 		particlegroup1[i].draw();
 		
@@ -122,8 +135,7 @@ void ofApp::draw(){
 
 	
 	//debug
-	int num_trail_pt = trails.size();
-	ofDrawBitmapString(num_trail_pt, 5, 15);
+
 
 }
 

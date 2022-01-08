@@ -11,7 +11,7 @@ class Particle
 	ofVec2f gravity = ofVec2f(0.3,0.9);
 	int p_radius = 10;
 	float fluid_density = 0.8;
-	float p_bounciness = 0.5;
+	float p_bounciness = 0.9;
 	int bounces_y;
 	int bounces_x;
 	ofVec2f reacting_force;
@@ -27,10 +27,12 @@ public:
 	void set_bounciness(float i);
 	void set_fluid_density(float i);
 	void set_p_radius(int i);
+	void set_acceleration(ofVec2f force);
 	void reset_bounces();
 	ofVec2f get_pos();
 	int get_p_rad();
 	void add_force(ofVec2f force);
+	ofVec2f get_acceleration();
 	
 
 
