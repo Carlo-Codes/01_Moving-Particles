@@ -1,6 +1,6 @@
 #include "ofApp.h"
 
-#define quantity 1000
+#define quantity 100
 		
 
 int p_rad_min = 2;
@@ -61,10 +61,14 @@ void p2p_collision(vector <Particle> &particlegroup) {
 
 
 
+
+
 //--------------------------------------------------------------
 void ofApp::setup(){
 	
 	//ofSetFrameRate(60);
+	
+
 	
 
 	for (int i = 0; i < quantity; i++) {
@@ -87,6 +91,8 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update() {
 
+	
+
 	p2p_collision(particlegroup1);
 	
 	
@@ -102,6 +108,14 @@ void ofApp::update() {
 
 	}
 
+
+
+
+	
+
+
+
+
 }
 
 
@@ -109,22 +123,20 @@ void ofApp::update() {
 void ofApp::draw(){
 	
 	
-	//particle.debug();
-	
-	for (int i = 0; i < quantity; i++) {
+	//for (int i = 0; i < quantity; i++) {
 
-		particlegroup1[i].draw();
-		
-	}
+		//particlegroup1[i].draw();
+
+	//}
 
 	for (int i = 0; i < trails.size(); i++) {
 
 		trails[i].draw();
-		
-		}
+
+	}
 
 	
-	//debug
+
 	int num_trail_pt = trails.size();
 	ofDrawBitmapString(num_trail_pt, 5, 15);
 

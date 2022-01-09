@@ -1,18 +1,21 @@
 #include "Particle.h"
 
-Particle::Particle() {
 
+
+
+Particle::Particle() {
+	part_fbo.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA);
 }
 
 Particle::Particle(int pos_x, int pos_y, int p_rad) {
-
+	part_fbo.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA);
 	position.set(pos_x, pos_y);
 	p_radius = p_rad;
 	null_vector.set(0, 0);
 }
 
 void Particle::setup(int pos_x, int pos_y, int p_rad) {
-
+	part_fbo.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA);
 	position.set(pos_x, pos_y);
 	p_radius = p_rad;
 	null_vector.set(0, 0);
@@ -32,8 +35,10 @@ void Particle::update() {
 }
 
 void Particle::draw() {
-
+	part_fbo.begin();
 	ofDrawCircle(position.x, position.y, p_radius);
+	part_fbo.end();
+	part_fbo.draw(0, 0);
 }
 
 ofVec2f Particle::drag(ofVec2f vector) {

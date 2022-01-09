@@ -1,10 +1,11 @@
 #pragma once
 #include "ofMain.h"
+#include "ofApp.h"
 
 
 class Particle
 {
-
+	
 	ofVec2f position;
 	ofVec2f velocity;
 	ofVec2f acceleration;
@@ -18,6 +19,8 @@ class Particle
 	ofVec2f drag(ofVec2f vector);
 	void next_frame();
 	void sum_vectors(ofVec2f ex_force, bool collision = false);
+
+	
 
 public:
 	Particle();
