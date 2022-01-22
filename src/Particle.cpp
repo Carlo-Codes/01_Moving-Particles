@@ -63,12 +63,14 @@ void Particle::sum_vectors(ofVec2f force, bool collision) {
 
 void Particle::next_frame() {
 	
+	int force_fx = 5;
+
 	if (position.y >= ofGetHeight() - p_radius) { // y screen collision
 		bounces_y += 1;
 		position.set(position.x, ofGetHeight() - p_radius);
 		
 		int react_vy = velocity.y * -1 * p_bounciness / bounces_y;
-		ofVec2f react_force(0, react_vy * 5);
+		ofVec2f react_force(0, react_vy * force_fx);
 
 		velocity.set(velocity.x, 0);
 		sum_vectors(react_force, true);
@@ -81,7 +83,7 @@ void Particle::next_frame() {
 		position.set(ofGetWidth() - p_radius, position.y);
 
 		int react_vx = velocity.x * -1 * p_bounciness / bounces_x;
-		ofVec2f react_force(react_vx * 5, 0);
+		ofVec2f react_force(react_vx * force_fx, 0);
 
 		velocity.set(0, velocity.y);
 		sum_vectors(react_force, true);
@@ -95,7 +97,7 @@ void Particle::next_frame() {
 
 
 		int react_vx = velocity.x * -1 * p_bounciness / bounces_x;
-		ofVec2f react_force(react_vx * 5, 0);
+		ofVec2f react_force(react_vx * force_fx, 0);
 
 		velocity.set(0, velocity.y);
 		sum_vectors(react_force, true);
@@ -158,4 +160,9 @@ int Particle::get_p_rad() {
 void Particle::add_force(ofVec2f force) {
 
 	acceleration.set(acceleration + force);
+}
+
+int Particle::get_bounces_y() {
+	return bounces_y;
+
 }

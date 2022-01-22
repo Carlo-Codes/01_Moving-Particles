@@ -12,6 +12,7 @@ vector <Particle> particlegroup1;
 vector <Trail> trails;
 
 
+
 /// My Functions////
 int num_t_grp;
 int frame;
@@ -59,26 +60,41 @@ void p2p_collision(vector <Particle> &particlegroup) {
 	}
 }
 
+void create_particle_and_trail(vector <Particle>& particlegroup, vector <Trail>& trail) {
+	int rand_x = ofRandom(0, ofGetWidth());
+	int rand_y = ofRandom(0, ofGetHeight() / 4 * 3);
+	int particle_size = ofRandom(p_rad_min, p_rad_max);
+
+	Particle temp_particle(rand_x, rand_y, particle_size);
+	particlegroup.push_back(temp_particle);
+
+	ofVec2f pos(rand_x, rand_y);
+	Trail temp_trail(pos, particle_size);
+	trail.push_back(temp_trail);
+
+}
+
+void remove_particle_and_trail(vector <Particle>& particlegroup, vector <Trail>& trail, int i) {
+
+	particlegroup.erase(particlegroup.begin() + i);
+
+	trail.erase(trail.begin() + i);
+
+}
 
 
 //--------------------------------------------------------------
 void ofApp::setup(){
 	
 	//ofSetFrameRate(60);
-	
+	//trail_Fbo.allocate(ofGetWidth(), ofGetHeight());
+	//trail_Fbo.begin();
+	//trail_Fbo.clear();
+	//trail_Fbo.end();
 
 	for (int i = 0; i < quantity; i++) {
 
-		int rand_x = ofRandom(50, 500);
-		int rand_y = ofRandom(50, 500);
-		int particle_size = ofRandom(p_rad_min, p_rad_max);
-		
-		Particle temp_particle(rand_x, rand_y, particle_size);
-		particlegroup1.push_back(temp_particle);
-
-		ofVec2f pos(rand_x, rand_y);
-		Trail trail(pos, particle_size);
-		trails.push_back(trail);
+		create_particle_and_trail(particlegroup1, trails);
 	}
 
 }
@@ -102,26 +118,44 @@ void ofApp::update() {
 
 	}
 
+
+	for (int i = 0; i < particlegroup1.size(); i++) { //removing and repopulating particles
+		int particle_y_position = particlegroup1[i].get_pos().y;
+		if (particle_y_position >= ofGetHeight() * 0.9) { // as long as particle is in last 10% of screen
+			if (particlegroup1[i].get_bounces_y() >= 2) {
+				if (ofRandom(0, 10) > 5) {
+					remove_particle_and_trail(particlegroup1, trails, i);
+					create_particle_and_trail(particlegroup1, trails);
+				}
+			}
+		}
+	}
+
 }
 
 
 //--------------------------------------------------------------
 void ofApp::draw(){
 	
-	
-	//particle.debug();
-	
-	for (int i = 0; i < quantity; i++) {
 
-		particlegroup1[i].draw();
-		
-	}
 
 	for (int i = 0; i < trails.size(); i++) {
 
 		trails[i].draw();
-		
-		}
+
+	}
+
+	for (int i = 0; i < particlegroup1.size(); i++) {
+
+		particlegroup1[i].draw();
+
+	}
+
+	//for (int i = 0; i < quantity; i++) {
+
+	//	particlegroup1[i].draw();
+	//	
+	//}
 
 	
 	//debug

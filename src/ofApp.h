@@ -29,8 +29,19 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
 		
 
+		ofFbo trail_Fbo;
+
 	
 		
 
 		
 };
+
+
+// to do 
+
+// add particles randomly popping in and out of existence
+
+// add clicking force and black hole attraction
+
+//

@@ -9,6 +9,7 @@ class Trail
 	ofColor tran_white;
 	int max_pos = 25; //trail length
 	ofPolyline trail_line;
+	
 
 
 
@@ -17,6 +18,7 @@ class Trail
 		void update(ofVec3f pos);
 		void draw();
 		void debug();
+
 		vector <glm::vec3> get_positions();
 };
 

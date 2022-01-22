@@ -5,6 +5,7 @@ Trail::Trail(ofVec3f pos, int rad) {
 	positions.push_back(pos);
 	ofColor tran_white(255, 255, 255, 0);
 
+
 }
 
 
@@ -25,7 +26,6 @@ void Trail::draw() {
 	int offsets = 5;
 	float scaling = 0.8;
 	
-
 	for (int i = 0; i < positions.size(); i++) {
 		ofSetColor(tran_white);
 		//ofDrawCircle(positions[i], radius * scaling);
