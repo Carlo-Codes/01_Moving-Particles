@@ -4,8 +4,6 @@
 class Trail
 {
 	int radius;
-	vector <glm::vec3> positions; //ffs 
-	vector <ofPoint> points;
 	ofColor tran_white;
 	int max_pos = 25; //trail length
 	ofPolyline trail_line;
@@ -15,11 +13,14 @@ class Trail
 
 	public:
 		Trail(ofVec3f pos, int rad);
-		void update(ofVec3f pos);
+		void update();
 		void draw();
 		void debug();
-		void remove_first_pos();
+		void remove_pos(int i);
+		void add_position(ofVec3f pos);
+		void remove_last();
+		
 
-		vector <glm::vec3> get_positions();
+		vector <glm::vec3> get_verticies();
 };
 

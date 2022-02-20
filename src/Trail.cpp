@@ -2,23 +2,22 @@
 
 Trail::Trail(ofVec3f pos, int rad) {
 	radius = rad;
-	positions.push_back(pos);
+	trail_line.addVertex(pos);
 	ofColor tran_white(255, 255, 255, 0);
 
 
 }
 
 
-void Trail::update(ofVec3f pos) {
+void Trail::update() {
 
-	if (positions.size() > max_pos) {
 
-		positions.erase(positions.begin());
+	if (trail_line.getVertices().size() > max_pos) {
 		trail_line.removeVertex(0);
 	}
-	positions.push_back(pos);
-	trail_line.addVertex(pos);
-	
+
+
+
 }
 
 void Trail::draw() {
@@ -26,25 +25,21 @@ void Trail::draw() {
 	int offsets = 5;
 	float scaling = 0.8;
 	
-	for (int i = 0; i < positions.size(); i++) {
-		ofSetColor(tran_white);
-		//ofDrawCircle(positions[i], radius * scaling);
-		
-	}
 	
 	trail_line.draw();
 }
 
 
-vector <glm::vec3> Trail::get_positions() {
+vector <glm::vec3> Trail::get_verticies() {
 	
-	return positions;
+	return trail_line.getVertices();
 
 }
 
-void Trail::remove_first_pos() {
+void Trail::remove_pos(int i) {
 
-	positions.erase(positions.begin());
+
+	trail_line.removeVertex(i);
 
 }
 
@@ -52,5 +47,16 @@ void Trail::debug() {
 
 
 
+
+}
+
+
+void Trail::add_position(ofVec3f pos) {
+	trail_line.addVertex(pos);
+}
+
+void Trail::remove_last() {
+
+	trail_line.removeVertex(trail_line.getVertices().size());
 
 }

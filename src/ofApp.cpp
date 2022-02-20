@@ -1,6 +1,6 @@
 #include "ofApp.h"
 
-#define quantity 1000
+#define quantity 500
 		
 
 int p_rad_min = 5;
@@ -76,9 +76,8 @@ void create_particle_and_trail(vector <Particle>& particlegroup, vector <Trail>&
 
 void remove_particle_and_trail(vector <Particle>& particlegroup, vector <Trail>& trails, int i) {
 
-	//particlegroup.erase(particlegroup.begin() + i);
-
-	trails[i].remove_first_pos();
+	particlegroup.erase(particlegroup.begin() + i);
+	//trails.erase(trails.begin() + i);
 
 	
 
@@ -88,11 +87,11 @@ void remove_particle_and_trail(vector <Particle>& particlegroup, vector <Trail>&
 //--------------------------------------------------------------
 void ofApp::setup(){
 	
-	//ofSetFrameRate(60);
-	//trail_Fbo.allocate(ofGetWidth(), ofGetHeight());
-	//trail_Fbo.begin();
-	//trail_Fbo.clear();
-	//trail_Fbo.end();
+	ofSetFrameRate(60);
+	Fbo.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA32F_ARB);
+	Fbo.begin();
+	ofClear(255, 255, 255, 0);
+	Fbo.end();
 
 	for (int i = 0; i < quantity; i++) {
 
@@ -107,32 +106,35 @@ void ofApp::update() {
 
 	p2p_collision(particlegroup1);
 	
-	
-
-	for (int i = 0; i < quantity; i++) {  //for the number of particles
-
-		ofVec2f parti_pos = particlegroup1[i].get_pos(); // getting particle information
-		int parti_rad = particlegroup1[i].get_p_rad();
-
-
-		trails[i].update(parti_pos);
-		
-
-	}
 
 
 	for (int i = 0; i < particlegroup1.size(); i++) { //removing and repopulating particles
 		int particle_y_position = particlegroup1[i].get_pos().y;
 		if (particle_y_position >= ofGetHeight() * 0.9) { // as long as particle is in last 10% of screen
 			if (particlegroup1[i].get_bounces_y() >= 2) {
-				trails[i].remove_first_pos(); // maybe try to update the trails differently to remove trails gradually
-				if (trails[i].get_positions().size() == 0) {
-					remove_particle_and_trail(particlegroup1, trails, i);
-					create_particle_and_trail(particlegroup1, trails);
-				}
+				particlegroup1.erase(particlegroup1.begin() + i);
+				create_particle_and_trail(particlegroup1, trails);
 			}
 		}
 	}
+
+	Fbo.begin();
+	ofEnableAlphaBlending();
+	ofSetColor(0, 0, 0, 50);
+	int steps = 3;
+	float scale = 0.8;
+	for (int i = 0; i < particlegroup1.size(); i++) {
+		for (int j = 0; j < steps; j++) {
+
+			ofDrawCircle(particlegroup1[i].get_pos(), particlegroup1[i].get_p_rad()/ 2 / (j * scale));
+			
+		}
+
+	}
+	ofFill();
+	ofSetColor(255, 255, 255, 15);
+	ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
+	Fbo.end();
 
 }
 
@@ -142,17 +144,22 @@ void ofApp::draw(){
 	
 
 
+
 	for (int i = 0; i < trails.size(); i++) {
 
-		trails[i].draw();
+		//trails[i].draw();
 
 	}
 
 	for (int i = 0; i < particlegroup1.size(); i++) {
 
-		//particlegroup1[i].draw();
+		ofSetColor(255, 255, 255, 255);
+		particlegroup1[i].draw();
+		
 
 	}
+
+	Fbo.draw(0,0);
 
 	//for (int i = 0; i < quantity; i++) {
 

@@ -29,7 +29,7 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
 		
 
-		ofFbo trail_Fbo;
+		ofFbo Fbo;
 
 	
 		

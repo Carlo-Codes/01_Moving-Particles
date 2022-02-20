@@ -24,16 +24,13 @@ void Particle::update() {
 	//debug();
 	next_frame();
 	
-	
-	
-	//acceleration.set(0, 0);
-	
+
 	
 }
 
 void Particle::draw() {
 
-	ofDrawCircle(position.x, position.y, p_radius);
+	ofDrawCircle(position.x, position.y, 1);
 }
 
 ofVec2f Particle::drag(ofVec2f vector) {
