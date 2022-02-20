@@ -18,6 +18,7 @@ class Trail
 		void update(ofVec3f pos);
 		void draw();
 		void debug();
+		void remove_first_pos();
 
 		vector <glm::vec3> get_positions();
 };

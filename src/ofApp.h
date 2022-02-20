@@ -40,8 +40,14 @@ class ofApp : public ofBaseApp{
 
 // to do 
 
-// add particles randomly popping in and out of existence
+// add particle system class
+
+// **use pointers instead -- see https://openframeworks.cc/ofBook/chapters/memory.html
+
+// ***add particles randomly popping in and out of existence
+
+// Gradually remove particles
 
 // add clicking force and black hole attraction
 
-//
+// fuck around with FBO

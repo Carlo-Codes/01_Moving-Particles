@@ -3,8 +3,8 @@
 #define quantity 1000
 		
 
-int p_rad_min = 2;
-int p_rad_max = 5;
+int p_rad_min = 5;
+int p_rad_max = 10;
 
 
 vector <Particle> particlegroup1;
@@ -74,11 +74,13 @@ void create_particle_and_trail(vector <Particle>& particlegroup, vector <Trail>&
 
 }
 
-void remove_particle_and_trail(vector <Particle>& particlegroup, vector <Trail>& trail, int i) {
+void remove_particle_and_trail(vector <Particle>& particlegroup, vector <Trail>& trails, int i) {
 
-	particlegroup.erase(particlegroup.begin() + i);
+	//particlegroup.erase(particlegroup.begin() + i);
 
-	trail.erase(trail.begin() + i);
+	trails[i].remove_first_pos();
+
+	
 
 }
 
@@ -123,7 +125,8 @@ void ofApp::update() {
 		int particle_y_position = particlegroup1[i].get_pos().y;
 		if (particle_y_position >= ofGetHeight() * 0.9) { // as long as particle is in last 10% of screen
 			if (particlegroup1[i].get_bounces_y() >= 2) {
-				if (ofRandom(0, 10) > 5) {
+				trails[i].remove_first_pos(); // maybe try to update the trails differently to remove trails gradually
+				if (trails[i].get_positions().size() == 0) {
 					remove_particle_and_trail(particlegroup1, trails, i);
 					create_particle_and_trail(particlegroup1, trails);
 				}
@@ -147,7 +150,7 @@ void ofApp::draw(){
 
 	for (int i = 0; i < particlegroup1.size(); i++) {
 
-		particlegroup1[i].draw();
+		//particlegroup1[i].draw();
 
 	}
 
@@ -186,8 +189,10 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
+	for (int i = 0; i < particlegroup1.size(); i++) {
 
 
+	}
 }
 
 //--------------------------------------------------------------

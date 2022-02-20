@@ -42,6 +42,12 @@ vector <glm::vec3> Trail::get_positions() {
 
 }
 
+void Trail::remove_first_pos() {
+
+	positions.erase(positions.begin());
+
+}
+
 void Trail::debug() {
 
 
