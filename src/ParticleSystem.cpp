@@ -4,18 +4,24 @@ ParticleSystem::ParticleSystem() {
 	
 };
 
-ParticleSystem::ParticleSystem(int quantity, int p_rad_min, int p_rad_max) {
+ParticleSystem::ParticleSystem(int quantity, int rad_min, int rad_max) {
+	p_rad_min = rad_min;
+	p_rad_max = rad_max;
 	for (int i = 0; i < quantity; i++) {
 
-		create_particle(particlegroup);
+		create_particle(rad_min, rad_max);
+
+
 	}
 
 };
 
-void ParticleSystem::populate(int quantity, int p_rad_min, int p_rad_max) {
+void ParticleSystem::populate(int quantity, int rad_min, int rad_max) {
+	p_rad_min = rad_min;
+	p_rad_max = rad_max;
 	for (int i = 0; i < quantity; i++) {
 
-		create_particle(particlegroup);
+		create_particle(rad_min, rad_max);
 	}
 
 };
@@ -64,12 +70,12 @@ void ParticleSystem::p2p_collision() {
 	}
 }
 
-void ParticleSystem::create_particle(vector <Particle>& particlegroup) {
+void ParticleSystem::create_particle(int rad_min, int rad_max) {
 
 
 	int rand_x = ofRandom(0, ofGetWidth());
 	int rand_y = ofRandom(0, ofGetHeight() / 4 * 3);
-	int particle_size = ofRandom(p_rad_min, p_rad_max);
+	int particle_size = ofRandom(rad_min, rad_max);
 
 	Particle temp_particle(rand_x, rand_y, particle_size);
 	particlegroup.push_back(temp_particle);
@@ -81,7 +87,7 @@ void ParticleSystem::erase_repop() {
 		if (particle_y_position >= ofGetHeight() * 0.9) { // as long as particle is in last 10% of screen
 			if (particlegroup[i].get_bounces_y() >= 2) {
 				particlegroup.erase(particlegroup.begin() + i);
-				create_particle(particlegroup);
+				create_particle(p_rad_min, p_rad_max);
 			}
 		}
 	}

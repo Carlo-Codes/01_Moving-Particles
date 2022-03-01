@@ -1,6 +1,6 @@
 #include "ofApp.h"
 
-#define q 1000
+#define q 500
 		
 
 int rad_min = 5;

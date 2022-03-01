@@ -4,7 +4,11 @@
 
 class ParticleSystem 
 {
+
+	vector <Particle> ps_g;
 	vector <Particle> particlegroup;
+
+
 	int p_rad_min;
 	int p_rad_max;
 	int quantity;
@@ -17,7 +21,7 @@ public:
 	void populate(int quantity, int p_rad_min, int p_rad_max);
 	void p2p_collision();
 	
-	void create_particle(vector <Particle>& particlegroup);
+	void create_particle(int rad_min, int rad_max);
 	void erase_repop();
 	void fbo_trails(int steps, float scale);
 	void draw_particles();
