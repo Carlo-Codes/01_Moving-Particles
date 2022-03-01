@@ -1,87 +1,11 @@
 #include "ofApp.h"
 
-#define quantity 500
+#define q 1000
 		
 
-int p_rad_min = 5;
-int p_rad_max = 10;
+int rad_min = 5;
+int rad_max = 10;
 
-
-vector <Particle> particlegroup1;
-
-vector <Trail> trails;
-
-
-
-/// My Functions////
-int num_t_grp;
-int frame;
-void p2p_collision(vector <Particle> &particlegroup) {
-
-	int particle_group_size = particlegroup.size();
-
-	for (int i = 0; i < particle_group_size; i++) {
-		for (int j = 0; j < particle_group_size; j++) {
-			
-			// Ball 2 ball collision 
-			ofVec2f i_pos(particlegroup[i].get_pos()); //get pos of first particle
-			ofVec2f j_pos(particlegroup[j].get_pos()); // get pois of second particle
-			int i_rad = particlegroup[i].get_p_rad(); // get rads
-			int j_rad = particlegroup[j].get_p_rad();
-
-			float force_modifier = 0.25;
-
-			float distance_between = i_pos.distance(j_pos); //using ofvec.distance (slow) to get the distance between balls
-			float touching_distance = i_rad + j_rad; // setting which distance is touching
-
-			if (distance_between <= touching_distance) { // if particles touch
-
-				int particle_i2j_dx = particlegroup[i].get_pos().x - particlegroup[j].get_pos().x; //difference in x between particles
-				int particle_i2j_dy = particlegroup[i].get_pos().y - particlegroup[j].get_pos().y; //difference in y
-
-				ofVec2f react_vector_i(particle_i2j_dx, particle_i2j_dy);
-				ofVec2f react_force_i = react_vector_i * force_modifier * 1 / i_rad; //add size adjusted force
-
-				int particle_j2i_dx = particlegroup[j].get_pos().x - particlegroup[i].get_pos().x;
-				int particle_j2i_dy = particlegroup[j].get_pos().y - particlegroup[i].get_pos().y;
-
-				ofVec2f react_vector_j(particle_j2i_dx, particle_j2i_dy);
-				ofVec2f react_force_j = react_vector_j * force_modifier * 1 / j_rad;//add size adjusted force
-
-				particlegroup[i].add_force(react_force_i);
-				particlegroup[j].add_force(react_force_j);
-
-				
-			}
-			
-		}
-		particlegroup[i].update();
-		
-	}
-}
-
-void create_particle_and_trail(vector <Particle>& particlegroup, vector <Trail>& trail) {
-	int rand_x = ofRandom(0, ofGetWidth());
-	int rand_y = ofRandom(0, ofGetHeight() / 4 * 3);
-	int particle_size = ofRandom(p_rad_min, p_rad_max);
-
-	Particle temp_particle(rand_x, rand_y, particle_size);
-	particlegroup.push_back(temp_particle);
-
-	ofVec2f pos(rand_x, rand_y);
-	Trail temp_trail(pos, particle_size);
-	trail.push_back(temp_trail);
-
-}
-
-void remove_particle_and_trail(vector <Particle>& particlegroup, vector <Trail>& trails, int i) {
-
-	particlegroup.erase(particlegroup.begin() + i);
-	//trails.erase(trails.begin() + i);
-
-	
-
-}
 
 
 //--------------------------------------------------------------
@@ -93,10 +17,7 @@ void ofApp::setup(){
 	ofClear(255, 255, 255, 0);
 	Fbo.end();
 
-	for (int i = 0; i < quantity; i++) {
-
-		create_particle_and_trail(particlegroup1, trails);
-	}
+	ps.populate(q, rad_min, rad_max);
 
 }
 
@@ -104,36 +25,19 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update() {
 
-	p2p_collision(particlegroup1);
-	
+	ps.p2p_collision();
+	ps.erase_repop();
 
-
-	for (int i = 0; i < particlegroup1.size(); i++) { //removing and repopulating particles
-		int particle_y_position = particlegroup1[i].get_pos().y;
-		if (particle_y_position >= ofGetHeight() * 0.9) { // as long as particle is in last 10% of screen
-			if (particlegroup1[i].get_bounces_y() >= 2) {
-				particlegroup1.erase(particlegroup1.begin() + i);
-				create_particle_and_trail(particlegroup1, trails);
-			}
-		}
-	}
 
 	Fbo.begin();
 	ofEnableAlphaBlending();
 	ofSetColor(0, 0, 0, 50);
-	int steps = 3;
-	float scale = 0.8;
-	for (int i = 0; i < particlegroup1.size(); i++) {
-		for (int j = 0; j < steps; j++) {
-
-			ofDrawCircle(particlegroup1[i].get_pos(), particlegroup1[i].get_p_rad()/ 2 / (j * scale));
-			
-		}
-
-	}
+	ps.fbo_trails(5, 0.5);
+	// constantly applying a grey square over the scence to blend out the trials
 	ofFill();
-	ofSetColor(255, 255, 255, 15);
+	ofSetColor(255, 255, 255, 10);
 	ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
+	//
 	Fbo.end();
 
 }
@@ -141,36 +45,10 @@ void ofApp::update() {
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-	
 
-
-
-	for (int i = 0; i < trails.size(); i++) {
-
-		//trails[i].draw();
-
-	}
-
-	for (int i = 0; i < particlegroup1.size(); i++) {
-
-		ofSetColor(255, 255, 255, 255);
-		particlegroup1[i].draw();
-		
-
-	}
+	ps.draw_particles();
 
 	Fbo.draw(0,0);
-
-	//for (int i = 0; i < quantity; i++) {
-
-	//	particlegroup1[i].draw();
-	//	
-	//}
-
-	
-	//debug
-	int num_trail_pt = trails.size();
-	ofDrawBitmapString(num_trail_pt, 5, 15);
 
 }
 
@@ -196,10 +74,7 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-	for (int i = 0; i < particlegroup1.size(); i++) {
 
-
-	}
 }
 
 //--------------------------------------------------------------

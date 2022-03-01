@@ -4,7 +4,8 @@
 
 #include "Particle.h"
 
-#include "Trail.h"
+#include "ParticleSystem.h"
+
 
 
 
@@ -30,7 +31,7 @@ class ofApp : public ofBaseApp{
 		
 
 		ofFbo Fbo;
-
+		ParticleSystem ps;
 	
 		
 
@@ -44,10 +45,5 @@ class ofApp : public ofBaseApp{
 
 // **use pointers instead -- see https://openframeworks.cc/ofBook/chapters/memory.html
 
-// ***add particles randomly popping in and out of existence
-
-// Gradually remove particles
 
 // add clicking force and black hole attraction
-
-// fuck around with FBO

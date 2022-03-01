@@ -10,7 +10,7 @@
     <ClCompile Include="src\Particle.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Trail.cpp">
+    <ClCompile Include="src\ParticleSystem.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -26,7 +26,7 @@
     <ClInclude Include="src\Particle.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\Trail.h">
+    <ClInclude Include="src\ParticleSystem.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

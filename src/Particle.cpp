@@ -28,9 +28,9 @@ void Particle::update() {
 	
 }
 
-void Particle::draw() {
+void Particle::draw(int radius) {
 
-	ofDrawCircle(position.x, position.y, 1);
+	ofDrawCircle(position.x, position.y, radius);
 }
 
 ofVec2f Particle::drag(ofVec2f vector) {
