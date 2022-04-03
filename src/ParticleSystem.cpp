@@ -85,7 +85,7 @@ void ParticleSystem::erase_repop() {
 	for (int i = 0; i < particlegroup.size(); i++) { //removing and repopulating particles
 		int particle_y_position = particlegroup[i].get_pos().y;
 		if (particle_y_position >= ofGetHeight() * 0.9) { // as long as particle is in last 10% of screen
-			if (particlegroup[i].get_bounces_y() >= 2) {
+			if (particlegroup[i].get_bounces_y() >= 2) { // could potentially add a random chance here
 				particlegroup.erase(particlegroup.begin() + i);
 				create_particle(p_rad_min, p_rad_max);
 			}
@@ -116,5 +116,80 @@ void ParticleSystem::draw_particles() {
 		particlegroup[i].draw();
 
 	}
+
+}
+
+void ParticleSystem::mouse_press_force(int x, int y, int button) {
+	
+	int effect_rad = 100;
+	glm::vec3 mouse_press;
+
+	float force_multiplier = 0.2;
+	float distance_fx_multiplier = 3;
+
+	mouse_press.x = x;
+	mouse_press.y = y;
+
+	if (button == 0) {
+		for (int i = 0; i < particlegroup.size(); i++) {
+			glm::vec3 particle_pos(particlegroup[i].get_pos().x, particlegroup[i].get_pos().y, 0);
+			float in_effect_distance = glm::distance(mouse_press, particle_pos);
+			if (in_effect_distance <= effect_rad) {
+
+				glm::vec3 distance_vec = mouse_press - particle_pos;
+				
+
+				//changing the maths here does a lot of tuning
+				glm::vec3 react_force = (distance_vec * -1) / ((in_effect_distance / effect_rad) * distance_fx_multiplier) * force_multiplier;
+				particlegroup[i].add_force(react_force);
+				
+
+			}
+
+
+		}
+
+
+	}
+
+	if (button == 2) {
+		for (int i = 0; i < particlegroup.size(); i++) {
+			glm::vec3 particle_pos(particlegroup[i].get_pos().x, particlegroup[i].get_pos().y, 0);
+			float in_effect_distance = glm::distance(mouse_press, particle_pos);
+			if (in_effect_distance <= effect_rad) {
+
+				glm::vec3 distance_vec = mouse_press - particle_pos;
+
+				glm::vec3 react_force = distance_vec * ((in_effect_distance / effect_rad) / distance_fx_multiplier) * force_multiplier;
+				particlegroup[i].add_force(react_force);
+			
+
+			}
+
+
+		}
+
+
+	}
+
+	if (button == 1) {
+		for (int i = 0; i < particlegroup.size(); i++) {
+			glm::vec3 particle_pos(particlegroup[i].get_pos().x, particlegroup[i].get_pos().y, 0);
+			float in_effect_distance = glm::distance(mouse_press, particle_pos);
+			if (in_effect_distance <= effect_rad) {
+
+				particlegroup[i].set_p_radius(20);
+
+			}
+
+
+		}
+
+
+	}
+}
+
+vector <Particle> ParticleSystem::get_particlegroup() {
+	return particlegroup;
 
 }

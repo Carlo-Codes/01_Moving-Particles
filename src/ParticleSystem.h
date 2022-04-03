@@ -5,7 +5,7 @@
 class ParticleSystem 
 {
 
-	vector <Particle> ps_g;
+
 	vector <Particle> particlegroup;
 
 
@@ -25,4 +25,10 @@ public:
 	void erase_repop();
 	void fbo_trails(int steps, float scale);
 	void draw_particles();
+
+	void mouse_press_force(int x, int y, int button);//, vector <Particle>& particlegroup);
+
+	vector <Particle> get_particlegroup();
+
+
 };

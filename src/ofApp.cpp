@@ -1,6 +1,6 @@
 #include "ofApp.h"
 
-#define q 500
+#define q 1000
 		
 
 int rad_min = 5;
@@ -74,6 +74,13 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
+
+	ps.mouse_press_force(x, y, button);
+
+
+
+
+
 
 }
 

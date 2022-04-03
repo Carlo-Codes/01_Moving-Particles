@@ -41,8 +41,6 @@ class ofApp : public ofBaseApp{
 
 // to do 
 
-// add particle system class
-
 // **use pointers instead -- see https://openframeworks.cc/ofBook/chapters/memory.html
 
 
