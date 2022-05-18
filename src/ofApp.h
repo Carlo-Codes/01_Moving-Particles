@@ -43,5 +43,6 @@ class ofApp : public ofBaseApp{
 
 // **use pointers instead -- see https://openframeworks.cc/ofBook/chapters/memory.html
 
+// intergrate open CV
 
 // add clicking force and black hole attraction

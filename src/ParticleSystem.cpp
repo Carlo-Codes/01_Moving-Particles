@@ -63,9 +63,10 @@ void ParticleSystem::p2p_collision() {
 
 
 			}
-
+		
 		}
 		particlegroup[i].update();
+
 
 	}
 }
