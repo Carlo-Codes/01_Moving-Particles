@@ -10,3 +10,6 @@ If you download the bin directory and run “moving particles.exe” it should r
 
 Now that I have the basis of a physics simulation, I want to add some open CV functionality to the program to allow for interactions via a camera. I would also like to make the collision detection function faster by removing the number of square root calculations it has to make allowing me to run the program with more particles.
 
+![image](https://user-images.githubusercontent.com/88803350/169156877-9483a6f4-75bc-4adf-b880-e190bacf85cd.png)
+
+
