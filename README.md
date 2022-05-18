@@ -6,7 +6,7 @@ The main objective of the project was to make an interactive 2d physics simulati
 
 The structure and complexity of the project has changed dramatically over time, where nearly everything is neatly organised in classes; it previously only had the particle class. An early blog post I made looking for feedback on my code can be found here - https://forum.openframeworks.cc/t/particle-physics-without-ofxbox2d/38899
 
-If you download the bin directory and run “moving particles.exe” it should run the program, left mouse click acts as an attractor and right mouse click acts as a repulsor.
+*Download the bin directory and run “moving particles.exe” it should run the program, left mouse click acts as an attractor and right mouse click acts as a repulsor.*
 
 Now that I have the basis of a physics simulation, I want to add some open CV functionality to the program to allow for interactions via a camera. I would also like to make the collision detection function faster by removing the number of square root calculations it has to make allowing me to run the program with more particles.
 
