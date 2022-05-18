@@ -75,9 +75,9 @@ void ofApp::mouseDragged(int x, int y, int button){
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
 
-	while (button == true) {
-		ps.mouse_press_force(x, y, button);
-	}
+
+	ps.mouse_press_force(x, y, button); //maybe add while loop to include mouse button held down functionality?
+
 	
 
 
