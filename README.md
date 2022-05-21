@@ -4,7 +4,7 @@ The project uses the openframeworks framework (https://openframeworks.cc/) which
 
 The main objective of the project was to make an interactive 2d physics simulation with no additional libraries other than the openframeworks framework. Coming from an engineering background, the physics and vector maths translated well. The collision detection of particles, although primitive, was something I had not done previously so researching that and implementing it was particularly enjoyable - see ```ParticleSystem::p2p_collision()```. Another subtle yet satisfying feature is that depending on how big the particle is, it falls at different speeds, simulating fluid density and resistance.
 
-The structure and complexity of the project has changed dramatically over time, where nearly everything is neatly organised in classes; it previously only had the particle class. An early blog post I made looking for feedback on my code can be found here - https://forum.openframeworks.cc/t/particle-physics-without-ofxbox2d/38899
+The structure and complexity of the project has changed dramatically over time, where nearly everything is neatly organised in classes; it previously only had the particle class. An early forum post I made looking for feedback on my code can be found here - https://forum.openframeworks.cc/t/particle-physics-without-ofxbox2d/38899
 
 **Download the bin directory and run “moving particles.exe” it should run the program, left mouse click acts as an attractor and right mouse click acts as a repulsor.**
 
